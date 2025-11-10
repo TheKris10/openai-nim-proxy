@@ -41,6 +41,19 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Root endpoint for Railway health checks
+app.get('/', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    service: 'OpenAI to NVIDIA NIM Proxy',
+    endpoints: {
+      health: '/health',
+      models: '/v1/models',
+      chat: '/v1/chat/completions'
+    }
+  });
+});
+
 // List models endpoint (OpenAI compatible)
 app.get('/v1/models', (req, res) => {
   const models = Object.keys(MODEL_MAPPING).map(model => ({
